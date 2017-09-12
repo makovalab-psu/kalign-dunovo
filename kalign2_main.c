@@ -26,8 +26,6 @@
 
 #include "kalign2.h"
 
-
-
 unsigned int numseq = 0;
 unsigned int numprofiles = 0;
 float gpo = 0;
@@ -39,6 +37,16 @@ int main(int argc,char **argv)
 	int i;
 	int* tree = 0;
 	int a, b, c;
+
+	/*
+	printf("$ ");
+	for (i = 0; i < argc; i++) {
+		if (i == argc-1) {
+			printf("%s\n", argv[i]);
+		} else {
+			printf("%s ", argv[i]);
+		}
+	}*/
 	
 	struct alignment* aln = 0;
 	struct parameters* param = 0;
@@ -46,7 +54,10 @@ int main(int argc,char **argv)
 	
 	param = malloc(sizeof(struct parameters));
 	
-	param =  interface(param,argc,argv);
+	param = make_param(param, argv[1], argv[3]);
+	// param =  interface(param,argc,argv);
+
+	// print_param(param);
 	
 	aln = detect_and_read_sequences(aln,param);
 	
@@ -182,8 +193,6 @@ int main(int argc,char **argv)
 		free(tree2);
 	}
 
-	
-
 
 	//get matrices... 
 	struct feature_matrix* fm = 0;
@@ -272,13 +281,10 @@ int main(int argc,char **argv)
 	//for (i = 0; i < numseq;i++){
 	//	fprintf(stderr,"%s	%d\n",aln->sn[i],aln->nsip[i]);
 	//}
-
 	
 	for (i = 0; i < numseq;i++){
 		aln->nsip[i] = 0;
 	}
-	
-	
 	
 	aln =  sort_sequences(aln,tree,param->sort);
 

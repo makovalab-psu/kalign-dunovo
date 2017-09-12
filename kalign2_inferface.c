@@ -70,9 +70,122 @@ void parameter_message(struct parameters* param)
 	}
 }
 
+int is_printable_str(char *str) {
+  if ((int)str > -1000 && (int)str < 1000) {
+    return 0;
+  }
+  int i = 0;
+  while (str[i] != 0) {
+    if (str[i] < 32 || str[i] > 126) {
+      return 0;
+    }
+    i++;
+  }
+  return 1;
+}
+
+void print_suspicious_str(char *name, char *str) {
+  printf("%s: ", name);
+  if (str == 0) {
+    printf("(null)\n");
+  } else if ((int)str > -1000 && (int)str < 1000) {
+    printf("%d\n", str);
+  } else if (is_printable_str(str)) {
+    printf("%s\n", str);
+  } else {
+    printf("[non-str]\n");
+  }
+}
+
+void print_param(struct parameters *param) {
+  int i;
+  printf("Parameters:\n");
+  char *name = malloc(sizeof(char) * 20);
+  for (i = 0; i < 4; i++) {
+    sprintf(name, "param->infile[%d]", i);
+    print_suspicious_str(name, param->infile[i]);
+  }
+  print_suspicious_str("param->input", param->input);
+  print_suspicious_str("param->outfile", param->outfile);
+  print_suspicious_str("param->format", param->format);
+  print_suspicious_str("param->feature_type", param->feature_type);
+  print_suspicious_str("param->alignment_type", param->alignment_type);
+  print_suspicious_str("param->feature_mode", param->feature_mode);
+  print_suspicious_str("param->distance", param->distance);
+  print_suspicious_str("param->tree", param->tree);
+  print_suspicious_str("param->sort", param->sort);
+  print_suspicious_str("param->sub_matrix", param->sub_matrix);
+  print_suspicious_str("param->print_tree", param->print_tree);
+  print_suspicious_str("param->print_svg_tree", param->print_svg_tree);
+  printf("param->gpo: %f\n", param->gpo);
+  printf("param->gpe: %f\n", param->gpe);
+  printf("param->tgpe: %f\n", param->tgpe);
+  printf("param->secret: %f\n", param->secret);
+  printf("param->zlevel: %f\n", param->zlevel);
+  printf("param->same_feature_score: %f\n", param->same_feature_score);
+  printf("param->diff_feature_score: %f\n", param->diff_feature_score);
+  printf("param->reformat: %d\n", param->reformat);
+  printf("param->id: %d\n", param->id);
+  printf("param->aa: %d\n", param->aa);
+  printf("param->alter_gaps: %d\n", param->alter_gaps);
+  printf("param->ntree: %d\n", param->ntree);
+  printf("param->help_flag: %d\n", param->help_flag);
+  printf("param->quiet: %d\n", param->quiet);
+  printf("param->dna: %d\n", param->dna);
+  printf("param->alter_range: %f\n", param->alter_range);
+  printf("param->alter_weight: %d\n", param->alter_weight);
+  printf("param->internal_gap_weight: %f\n", param->internal_gap_weight);
+  printf("param->smooth_window: %d\n", param->smooth_window);
+  printf("param->gap_inc: %f\n", param->gap_inc);
+  printf("End of parameters.\n\n");
+}
+
+struct parameters *make_param(struct parameters *param, char *infile, char *outfile) {
+  param->infile = malloc(sizeof(char*)*3);
+  param->infile[0] = 0;
+  param->infile[1] = infile;
+  param->infile[2] = 0;
+  param->input = 0;
+  param->outfile = outfile;
+  param->format = 0;
+  param->feature_type = 0;
+  param->alignment_type = "default";
+  param->distance = "wu";
+  param->sort = 0;
+  param->sub_matrix = 0;
+  param->print_tree = 0;
+  param->print_svg_tree = 0;
+  param->tree = "upgma";
+  param->gpo = -0.75; // default: -1.0 (Gap open penalty)
+  param->gpe = -1.0;
+  param->tgpe = -0.75; // default: -1.0 (Terminal gap extension penalty)
+  param->secret = -1.0;
+  param->zlevel = 58.8;
+  param->same_feature_score = 75;
+  param->diff_feature_score = -5;
+  param->reformat = 0;
+  param->id = -1;
+  param->aa = 0;
+  param->alter_gaps = 0;
+  param->ntree = 2;
+  param->help_flag = 0;
+  param->quiet = 1;
+  param->dna = -1;
+  param->alter_range = 0.5;
+  param->alter_weight = 100;
+  param->internal_gap_weight = 0;
+  param->smooth_window = 1;
+  param->gap_inc = 0.0;
+  if (param->quiet) {
+    fclose(stderr);
+  }
+  return param;
+}
+
 struct parameters* interface(struct parameters* param,int argc,char **argv)
 {
 	int i,c;
+
 	param->gpo = -1.0;
 	param->gpe = -1.0;
 	param->tgpe = -1.0;
@@ -372,7 +485,6 @@ Kalign version 2.04, Copyright (C) 2004, 2005, 2006 Timo Lassmann\n\n\
                 }else{
                 	i = 2;
                 }
-                fprintf(stderr,"EXTRA :%d\n",argc - optind); 
                 param->infile = realloc(param->infile,(sizeof(char*) * (argc - optind+i)));
                 for (c = i-1 ; c < (argc - optind+i);c++){
                 	param->infile[c] = 0;
