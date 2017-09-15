@@ -156,9 +156,9 @@ struct parameters *make_param(struct parameters *param, char *infile, char *outf
   param->print_tree = 0;
   param->print_svg_tree = 0;
   param->tree = "upgma";
-  param->gpo = -0.75; // default: -1.0 (Gap open penalty)
+  param->gpo = -1.0; // default: -1.0 (Gap open penalty)
   param->gpe = -1.0;
-  param->tgpe = -0.75; // default: -1.0 (Terminal gap extension penalty)
+  param->tgpe = -0.95; // default: -1.0 (Terminal gap extension penalty)
   param->secret = -1.0;
   param->zlevel = 58.8;
   param->same_feature_score = 75;
