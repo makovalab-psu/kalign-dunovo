@@ -28,21 +28,7 @@
 
 void output(struct alignment* aln,struct parameters* param)
 {
-	if(!param->format){
-		fasta_output(aln,param->outfile);
-	}else{
-		if (byg_start(param->format,"alnALNclustalCLUSTALclustalwCLUSTALWclustalWClustalW") != -1){
-			aln_output(aln,param);
-		}else if (byg_start(param->format,"msfMSFgcgGCGpileupPILEUP") != -1){
-			msf_output(aln,param->outfile);
-		}else if (byg_start(param->format,"eclu") != -1){
-			clustal_output(aln,param->outfile);
-		}else if (byg_start("macsim",param->format) != -1){
-			macsim_output(aln,param->outfile,param->infile[0]);
-		}else{
-			fasta_output(aln,param->outfile);
-		}
-	}
+	fasta_output(aln, param->outfile);
 	free_param(param);
 }
 
