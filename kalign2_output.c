@@ -23,12 +23,27 @@
 	timolassmann@gmail.com
 */
 
+#include <string.h>
 #include "kalign2.h"
 #include "kalign2_output.h"
 
 void output(struct alignment* aln,struct parameters* param)
 {
-	fasta_output(aln, param->outfile);
+	if(!param->format){
+		fasta_output(aln,param->outfile);
+	}else{
+		if (byg_start(param->format,"alnALNclustalCLUSTALclustalwCLUSTALWclustalWClustalW") != -1){
+			aln_output(aln,param);
+		}else if (byg_start(param->format,"msfMSFgcgGCGpileupPILEUP") != -1){
+			msf_output(aln,param->outfile);
+		}else if (byg_start(param->format,"eclu") != -1){
+			clustal_output(aln,param->outfile);
+		}else if (byg_start("macsim",param->format) != -1){
+			macsim_output(aln,param->outfile,param->infile[0]);
+		}else{
+			fasta_output(aln,param->outfile);
+		}
+	}
 	free_param(param);
 }
 
@@ -615,6 +630,7 @@ void fasta_output(struct alignment* aln,char* outfile)
 			while (tmp){
 				fprintf(fout,"-");
 				c++;
+				// Print a newline if the line has gotten too long.
 				if(c == 60 && j != aln->sl[f]-1){
 					fprintf(fout,"\n");
 					c = 0;
@@ -646,3 +662,57 @@ void fasta_output(struct alignment* aln,char* outfile)
 	free_aln(aln);
 }
 
+
+AlnStrs *aln_to_strs(struct alignment *aln) {
+	AlnStrs *aln_strs = malloc(sizeof(AlnStrs *));
+	aln_strs->nseqs = numseq;
+	char **names = malloc(sizeof(char *) * numseq);
+	char **seqs = malloc(sizeof(char *) * numseq);
+
+	int i, j, g, f, pos, num_gaps, gaplen;
+	int seqlen = -1;
+	for (i = 0; i < numseq; i++) {
+		// f is an index of where this sequence is in the aln data structure (usually f == i).
+		f = aln->nsip[i];
+		pos = 0;
+		// Get the sequence name.
+		names[i] = malloc(sizeof(char *) * strlen(aln->sn[f]));
+		strcpy(names[i], aln->sn[f]);
+		// Get the final (gapped) sequence length, if we haven't already
+		// (it'll be the same for all sequences (it's an alignment)).
+		if (seqlen == -1) {
+			// Get the length by adding num_gaps + seq_len.
+			num_gaps = 0;
+			for (j = 0; j < aln->sl[f]; j++) {
+				num_gaps += aln->s[f][j];
+			}
+			seqlen = num_gaps + aln->sl[f] + 1;
+			aln_strs->seqlen = seqlen;
+		}
+		seqs[i] = malloc(sizeof(char *) * seqlen);
+		// aln->sl holds sequence lengths.
+		for (j = 0; j < aln->sl[f]; j++) {
+			// gaplen is the length of any gap at this position.
+			gaplen = aln->s[f][j];
+			for (g = 0; g < gaplen; g++) {
+				// Insert a gap.
+				seqs[i][pos] = '-';
+				pos++;
+			}
+			// Insert a base.
+			seqs[i][pos] = aln->seq[f][j];
+			pos++;
+		}
+		// Insert any ending gap.
+		gaplen = aln->s[f][aln->sl[f]];
+		for (g = 0; g < gaplen; g++) {
+			// Insert a gap.
+			seqs[i][pos] = '-';
+			pos++;
+		}
+		seqs[i][pos] = '\0';
+	}
+	aln_strs->names = names;
+	aln_strs->seqs = seqs;
+	return aln_strs;
+}

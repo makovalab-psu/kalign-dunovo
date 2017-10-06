@@ -37,16 +37,6 @@ int main(int argc,char **argv)
 	int i;
 	int* tree = 0;
 	int a, b, c;
-
-	/*
-	printf("$ ");
-	for (i = 0; i < argc; i++) {
-		if (i == argc-1) {
-			printf("%s\n", argv[i]);
-		} else {
-			printf("%s ", argv[i]);
-		}
-	}*/
 	
 	struct alignment* aln = 0;
 	struct parameters* param = 0;
@@ -56,8 +46,6 @@ int main(int argc,char **argv)
 	
 	param = make_param(param, argv[1], argv[3]);
 	// param =  interface(param,argc,argv);
-
-	// print_param(param);
 	
 	aln = detect_and_read_sequences(aln,param);
 	
@@ -293,7 +281,16 @@ int main(int argc,char **argv)
 	//}
 	
 	
-	output(aln,param);
+	// output(aln,param);
+	AlnStrs *aln_strs = aln_to_strs(aln);
+	free_aln(aln);
+	free_param(param);
+
+	for (int i = 0; i < aln_strs->nseqs; i++) {
+		printf(">%s\n", aln_strs->names[i]);
+		printf("%s\n", aln_strs->seqs[i]);
+	}
+
 /*	if(!param->format){
 		fasta_output(aln,param->outfile);
 	}else{

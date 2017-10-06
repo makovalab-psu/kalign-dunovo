@@ -37,7 +37,6 @@
 #define tmalloc malloc
 #endif
 
-
 extern unsigned int numseq;
 extern unsigned int numprofiles;
 extern float gpo;
@@ -199,6 +198,21 @@ struct ntree_data{
 	int* tree;
 	int ntree;
 };
+
+// Additions for Du Novo
+
+typedef struct {
+	int nseqs;
+	int seqlen;
+	char **names;
+	char **seqs;
+} AlnStrs;
+
+AlnStrs *aln_to_strs(struct alignment *aln);
+
+struct parameters *make_param(struct parameters *param, char *infile, char *outfile);
+
+// End Du Novo
 
 struct alignment* sort_sequences(struct alignment* aln,int* tree,char* sort);
 
