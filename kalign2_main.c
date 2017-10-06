@@ -32,8 +32,7 @@ float gpo = 0;
 float gpe = 0;
 float tgpe = 0;
 
-int main(int argc,char **argv)
-{
+AlnStrs *main(int argc,char **argv) {
 	int i;
 	int* tree = 0;
 	int a, b, c;
@@ -286,11 +285,6 @@ int main(int argc,char **argv)
 	free_aln(aln);
 	free_param(param);
 
-	for (int i = 0; i < aln_strs->nseqs; i++) {
-		printf(">%s\n", aln_strs->names[i]);
-		printf("%s\n", aln_strs->seqs[i]);
-	}
-
 /*	if(!param->format){
 		fasta_output(aln,param->outfile);
 	}else{
@@ -306,7 +300,7 @@ int main(int argc,char **argv)
 	
 	free(map);
 	free(tree);
-	return 0;
+	return aln_strs;
 }
 
 
