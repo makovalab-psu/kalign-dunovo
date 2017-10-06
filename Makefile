@@ -22,7 +22,7 @@ OBJECTS = $(SOURCES:.c=.o)
 .PHONY: all clean
 
 all: $(OBJECTS)
-	$(CC) $(CFLAGS) -shared $(OBJECTS) -o kalign.so
+	$(CC) $(CFLAGS) -shared $(OBJECTS) -o libkalign.so
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
