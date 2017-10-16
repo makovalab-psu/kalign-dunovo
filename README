@@ -20,29 +20,11 @@
   
 	A copy of this license is in the COPYING file.
 -----------------------------------------------------------------------
+
+This is a modified version of the Kalign2 code written by Timo Lassmann. It has been modified to
+integrate it with Du Novo. It will not function independently.
+
 Installation:
 
-% ./configure 
+% make clean
 % make
-
-and as root:
-
-% make install
-
-
-Usage:
-
-        kalign [Options]  infile.fasta outfile.fasta
-        
-        or:
-        
-        kalign [Options] -i infile.fasta -o outfile.fasta
-        
-        or:
-        
-        kalign [Options] < infile.fasta > outfile.fasta
-
-        Options:
-        
-	type: kalign -h 
-	
