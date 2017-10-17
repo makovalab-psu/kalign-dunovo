@@ -121,11 +121,19 @@ struct alignment{
 	struct feature** ft;
 	struct sequence_info** si;
 	unsigned int** sip;
+	// sip seems to convert between a 0 to numseq index of sequences to some kind of internal index,
+	// used in sn, seq, sl, and s. In practice, the two indexes seem to be (at least sometimes) equal.
+	// See how it's used in kalign2_output.c:aln_to_strs().
 	unsigned int* nsip;
+	// sl stores an array of the (original, unaligned) sequence lengths.
 	unsigned int* sl;
 	unsigned int* lsn;
+	// s stores the gaps. Each element corresponds to a position in the sequence, and the value is
+	// the length of the gap before that base (0 for no gap).
 	int** s;
+	// seq stores the (original, unaligned) sequence.
 	char**seq;
+	// sn stores an array of sequence names.
 	char** sn;
 };
 
