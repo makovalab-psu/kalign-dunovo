@@ -54,28 +54,31 @@ def main(argv):
 def align(seqs):
   """Perform a multiple sequence alignment on a set of sequences and parse the result."""
   i = 0
+  input_file = tempfile.NamedTemporaryFile('w', delete=False, prefix='align.msa.')
   try:
-    with tempfile.NamedTemporaryFile('w', delete=False, prefix='align.msa.') as input_file:
-      for seq in seqs:
-        i += 1
-        input_file.write('>seq{}\n'.format(i))
-        input_file.write(seq+'\n')
-    output_file = tempfile.NamedTemporaryFile('r', delete=False, prefix='align.msa.')
-    output_file.close()
-    argc, argv = make_args(input_file.name, output_file.name)
+    for seq in seqs:
+      i += 1
+      input_file.write('>seq{}\n'.format(i))
+      input_file.write(seq+'\n')
+    input_file.close()
+    argc, argv = make_args(input_file.name)
     # print '$ '+' '.join([arg for arg in argv])
     aln = kalign.main(argc, argv)
     return aln.contents
   finally:
-    # Make sure we delete the temporary files.
+    # Make sure we delete the temporary file.
+    try:
+      input_file.close()
+    except OSError:
+      pass
     try:
       os.remove(input_file.name)
     except OSError:
       pass
 
 
-def make_args(infile, outfile):
-  argv_list = ('kalign', infile, '-o', outfile)
+def make_args(infile):
+  argv_list = ('kalign', infile, '-o', '/dev/null')
   argc = len(argv_list)
   argv_c = strlist_to_c(argv_list)
   return argc, argv_c
