@@ -176,9 +176,6 @@ struct parameters *make_param(struct parameters *param, char *infile, char *outf
   param->internal_gap_weight = 0;
   param->smooth_window = 1;
   param->gap_inc = 0.0;
-  if (param->quiet) {
-    fclose(stderr);
-  }
   return param;
 }
 
@@ -521,14 +518,14 @@ Kalign version 2.04, Copyright (C) 2004, 2005, 2006 Timo Lassmann\n\n\
 		exit(1);
 	}
 	
-	if(param->quiet){
-		fclose(stderr);
-	}
-	fprintf(stderr,"%s", license);
-        if (param->help_flag){
-                fprintf(stderr,"%s\n", usage);
-                exit(1);
-        }
+	// if(param->quiet){
+	// 	fclose(stderr);
+	// }
+	// fprintf(stderr,"%s", license);
+	// if (param->help_flag){
+	// 	fprintf(stderr,"%s\n", usage);
+	// 	exit(1);
+	// }
 	//exit(0);
 	
         

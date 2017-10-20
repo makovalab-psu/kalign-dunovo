@@ -35,7 +35,7 @@ float** protein_pairwise_alignment_distance(struct alignment* aln,float** dm,str
 	int a,b;
 	
 	
-	fprintf(stderr,"Distance Calculation:\n");
+	// fprintf(stderr,"Distance Calculation:\n");
 	
 	b = (numseq*(numseq-1))/2;
 	a = 1;	
@@ -82,7 +82,7 @@ float** protein_pairwise_alignment_distance(struct alignment* aln,float** dm,str
 			path = ss_dyn(subm,path,dp,aln->s[i],aln->s[j],len_a,len_b);
 			dm[i][j] = get_distance_from_pairwise_alignment(path,aln->s[i],aln->s[j]);
 			dm[j][i] = dm[i][j];
-			fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
+			// fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
 			a++;
 			
 			free(path);
@@ -716,7 +716,7 @@ float** protein_wu_distance(struct alignment* si,float** dm,struct parameters* p
 			}
 		}
 	}
-	fprintf(stderr,"Distance Calculation:\n");
+	// fprintf(stderr,"Distance Calculation:\n");
 	b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
@@ -743,7 +743,7 @@ float** protein_wu_distance(struct alignment* si,float** dm,struct parameters* p
 			//dm[i][j] /= min;
 			//dm[i][j] /= (si->sl[i] > si->sl[j]) ? si->sl[j] :si->sl[i];
 			dm[j][i] = dm[i][j];
-			fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
+			// fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
 			a++;
 		}
 		
@@ -842,7 +842,7 @@ float** dna_distance(struct alignment* si,float** dm,struct parameters* param, i
 	unsigned int hv;
 	
 	
-	fprintf(stderr,"Distance Calculation:\n");
+	// fprintf(stderr,"Distance Calculation:\n");
 	
 	
 	for (i = 0;i < 1024;i++){
@@ -891,7 +891,7 @@ float** dna_distance(struct alignment* si,float** dm,struct parameters* param, i
 			dm[i][j] = dna_distance_calculation(hash,si->s[j],si->sl[j],si->sl[j]+si->sl[i],param->zlevel);
 			dm[i][j] /= (si->sl[i] > si->sl[j]) ?si->sl[j] :si->sl[i];
 			dm[j][i] = dm[i][j];
-			fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
+			// fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
 			a++;
 		}
 		

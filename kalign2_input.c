@@ -70,11 +70,11 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 	
 	
 	for (i = c; i < num_input;i++){
-		if(!param->infile[i]){
-			fprintf(stderr,"reading from STDIN: ");
-		}else{
-			fprintf(stderr,"reading from %s: ",param->infile[i]);
-		}
+		// if(!param->infile[i]){
+		// 	fprintf(stderr,"reading from STDIN: ");
+		// }else{
+		// 	fprintf(stderr,"reading from %s: ",param->infile[i]);
+		// }
 		input[i] = get_input_into_string(input[i],param->infile[i]);
 		if(input[i]){
 			free_read++;
@@ -107,7 +107,7 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 				input_numseq[i]  = count_sequences_fasta(input[i]);
 				input_type[i] = 0;
 			}
-			fprintf(stderr,"found %d sequences\n",input_numseq[i]);
+			// fprintf(stderr,"found %d sequences\n",input_numseq[i]);
 			
 			if(input_numseq[i] < 1){
 				free(input[i]);
@@ -346,7 +346,7 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 			}else if (byg_start("macsim",param->outfile) != -1){
 				param->format = "macsim";
 			}
-			fprintf(stderr,"Output file: %s, in %s format.\n",param->outfile,param->format);
+			// fprintf(stderr,"Output file: %s, in %s format.\n",param->outfile,param->format);
 	}
 	
 	
@@ -631,7 +631,7 @@ struct alignment* read_alignment_from_swissprot(struct alignment* aln,char* stri
 		c++;
 	}
 
-	fprintf(stderr,"found sequence:\n");
+	// fprintf(stderr,"found sequence:\n");
 	while ((i = byg_end("ID   ",p)) != -1){
 		p+=i;
 		j = byg_start(" ",p);
@@ -647,7 +647,7 @@ struct alignment* read_alignment_from_swissprot(struct alignment* aln,char* stri
 		j = byg_end("\n",p);
 		p+= j;
 		j = byg_start("//",p);
-		fprintf(stderr,"found sequence:\n");
+		// fprintf(stderr,"found sequence:\n");
 		aln->s[c] = malloc(sizeof(int)*(j+1));
 		aln->seq[c] = malloc(sizeof(char)*(j+1));
 		n = 0;
@@ -658,13 +658,13 @@ struct alignment* read_alignment_from_swissprot(struct alignment* aln,char* stri
 				}else{
 					aln->s[c][n] = -1;
 				}
-				fprintf(stderr,"%c",p[i]);
+				// fprintf(stderr,"%c",p[i]);
 				aln->seq[c][n] = p[i];
 				n++;
 			}
 		}
 		
-		fprintf(stderr,"\n\n");
+		// fprintf(stderr,"\n\n");
 		aln->s[c][n] = 0;
 		aln->seq[c][n] = 0;
 		aln->sl[c] = n;
