@@ -662,6 +662,7 @@ void fasta_output(struct alignment* aln,char* outfile)
 	free_aln(aln);
 }
 
+// Addition for Du Novo
 
 AlnStrs *aln_to_strs(struct alignment *aln) {
 	AlnStrs *aln_strs = malloc(sizeof(AlnStrs *));
@@ -716,3 +717,5 @@ AlnStrs *aln_to_strs(struct alignment *aln) {
 	aln_strs->seqs = seqs;
 	return aln_strs;
 }
+
+// End Du Novo

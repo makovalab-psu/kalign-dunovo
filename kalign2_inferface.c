@@ -70,6 +70,8 @@ void parameter_message(struct parameters* param)
 	}
 }
 
+// Additions for Du Novo
+
 int is_printable_str(char *str) {
   if ((int)str > -1000 && (int)str < 1000) {
     return 0;
@@ -178,6 +180,8 @@ struct parameters *make_param(struct parameters *param, char *infile, char *outf
   param->gap_inc = 0.0;
   return param;
 }
+
+// End Du Novo
 
 struct parameters* interface(struct parameters* param,int argc,char **argv)
 {
