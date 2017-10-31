@@ -686,7 +686,7 @@ AlnStrs *aln_to_strs(struct alignment *aln) {
 		if (seqlen == -1) {
 			// Get the length by adding num_gaps + seq_len.
 			num_gaps = 0;
-			for (j = 0; j < aln->sl[f]; j++) {
+			for (j = 0; j <= aln->sl[f]; j++) {
 				num_gaps += aln->s[f][j];
 			}
 			seqlen = num_gaps + aln->sl[f] + 1;
