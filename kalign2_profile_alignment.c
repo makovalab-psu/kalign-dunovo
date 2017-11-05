@@ -367,7 +367,7 @@ float** protein_profile_wu_distance(struct alignment* aln,float** dm,struct para
 {
 	struct bignode* hash[1024];
 	int*p =0;
-	int i,j,m,n,a,b;
+	int i,j,m,n,a;
 	unsigned int hv;
 		
 	int** local_seq = 0;
@@ -412,7 +412,7 @@ float** protein_profile_wu_distance(struct alignment* aln,float** dm,struct para
 		}
 	}
 	// fprintf(stderr,"Distance Calculation:\n");
-	b = (numseq*(numseq-1))/2;
+	// b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
 	//fprintf(stderr,"%d	%d	%8.0f\n",a,b,(float)a /(float)b * 100);
@@ -472,7 +472,7 @@ float** dna_profile_distance(struct alignment* aln,float** dm,struct parameters*
 	struct bignode* hash[1024];
 	
 	int *p = 0;
-	int i,j,a,b,m,n;
+	int i,j,a,m,n;
 	unsigned int hv;
 	int** local_seq = 0;
 	int* local_sl = 0;
@@ -517,7 +517,7 @@ float** dna_profile_distance(struct alignment* aln,float** dm,struct parameters*
 		}
 	}
 
-	b = (numseq*(numseq-1))/2;
+	// b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
 	for (i = 0; i < numseq-1;i++){

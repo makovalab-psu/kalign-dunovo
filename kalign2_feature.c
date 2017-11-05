@@ -433,7 +433,7 @@ int* feature_hirsch_align_two_pp_vector(const float* prof1,const float* prof2,st
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	
@@ -550,7 +550,7 @@ int* feature_hirsch_align_two_pp_vector(const float* prof1,const float* prof2,st
 	//	exit(0);
 	//}
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			

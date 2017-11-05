@@ -32,12 +32,12 @@ float** protein_pairwise_alignment_distance(struct alignment* aln,float** dm,str
 	int len_a = 0;
 	int len_b = 0;
 	struct dp_matrix *dp = 0;
-	int a,b;
+	int a;
 	
 	
 	// fprintf(stderr,"Distance Calculation:\n");
 	
-	b = (numseq*(numseq-1))/2;
+	// b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
 	
@@ -690,7 +690,7 @@ float** protein_wu_distance(struct alignment* si,float** dm,struct parameters* p
 {
 	struct bignode* hash[1024];
 	int*p =0;
-	int i,j,a,b;
+	int i,j,a;
 	unsigned int hv;
 	float min;
 	float cutoff;
@@ -717,7 +717,7 @@ float** protein_wu_distance(struct alignment* si,float** dm,struct parameters* p
 		}
 	}
 	// fprintf(stderr,"Distance Calculation:\n");
-	b = (numseq*(numseq-1))/2;
+	// b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
 	for (i = 0; i < numseq-1;i++){
@@ -838,7 +838,7 @@ float** dna_distance(struct alignment* si,float** dm,struct parameters* param, i
 	struct bignode* hash[1024];
 	
 	int *p = 0;
-	int i,j,a,b;
+	int i,j,a;
 	unsigned int hv;
 	
 	
@@ -867,7 +867,7 @@ float** dna_distance(struct alignment* si,float** dm,struct parameters* param, i
 		}
 	}
 
-	b = (numseq*(numseq-1))/2;
+	// b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
 	for (i = 0; i < numseq-1;i++){

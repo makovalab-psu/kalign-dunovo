@@ -324,7 +324,7 @@ int* hirsch_align_two_dna_ss_vector(float**subm,const int* seq1,const int* seq2,
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	
@@ -425,7 +425,7 @@ int* hirsch_align_two_dna_ss_vector(float**subm,const int* seq1,const int* seq2,
 	
 	//fprintf(stderr,"Transition:%d	at:%d\n",transition,c);
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			
@@ -872,7 +872,7 @@ int* hirsch_align_two_dna_ps_vector(const float* prof1,const int* seq2,struct hi
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	const int open = gpo * sip;
@@ -979,7 +979,7 @@ int* hirsch_align_two_dna_ps_vector(const float* prof1,const int* seq2,struct hi
 	
 	//fprintf(stderr,"Transition:%d	at:%d\n",transition,c);
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			
@@ -1441,7 +1441,7 @@ int* hirsch_align_two_dna_pp_vector(const float* prof1,const float* prof2,struct
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	
@@ -1549,7 +1549,7 @@ int* hirsch_align_two_dna_pp_vector(const float* prof1,const float* prof2,struct
 	
 	//fprintf(stderr,"Transition:%d	at:%d\n",transition,c);
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			

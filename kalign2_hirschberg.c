@@ -332,7 +332,7 @@ int* hirsch_align_two_ss_vector(float**subm,const int* seq1,const int* seq2,stru
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	
@@ -438,7 +438,7 @@ int* hirsch_align_two_ss_vector(float**subm,const int* seq1,const int* seq2,stru
 	
 	//fprintf(stderr,"Transition:%d	at:%d\n",transition,c);
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			
@@ -905,7 +905,7 @@ int* hirsch_align_two_ps_vector(const float* prof1,const int* seq2,struct hirsch
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	const float open = gpo * sip;
@@ -1017,7 +1017,7 @@ int* hirsch_align_two_ps_vector(const float* prof1,const int* seq2,struct hirsch
 	
 	//fprintf(stderr,"Transition:%d	at:%d\n",transition,c);
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			
@@ -1498,7 +1498,7 @@ int* hirsch_align_two_pp_vector(const float* prof1,const float* prof2,struct hir
 {
 	struct states* f = hm->f;
  	struct states* b = hm->b;
-	int i,j,c;
+	int i,c;
 	int transition = -1;
 	
 	
@@ -1615,7 +1615,7 @@ int* hirsch_align_two_pp_vector(const float* prof1,const float* prof2,struct hir
 	//	exit(0);
 	//}
 	
-	j = hirsch_path[0];
+	// j = hirsch_path[0];
 	switch(transition){
 		case 1: //a -> a = 1
 			
