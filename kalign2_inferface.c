@@ -73,7 +73,7 @@ void parameter_message(struct parameters* param)
 // Additions for Du Novo
 
 int is_printable_str(char *str) {
-  if ((int)str > -1000 && (int)str < 1000) {
+  if ((long int)str > -1000 && (long int)str < 1000) {
     return 0;
   }
   int i = 0;
@@ -90,8 +90,8 @@ void print_suspicious_str(char *name, char *str) {
   printf("%s: ", name);
   if (str == 0) {
     printf("(null)\n");
-  } else if ((int)str > -1000 && (int)str < 1000) {
-    printf("%d\n", str);
+  } else if ((long int)str > -1000 && (long int)str < 1000) {
+    printf("%ld\n", (long int)str);
   } else if (is_printable_str(str)) {
     printf("%s\n", str);
   } else {
@@ -228,13 +228,13 @@ struct parameters* interface(struct parameters* param,int argc,char **argv)
 	param->same_feature_score = 75;
 	param->diff_feature_score = -5;
         
-        
+/*
         static char  license[] = "\n\
 Kalign version 2.04, Copyright (C) 2004, 2005, 2006 Timo Lassmann\n\n\
         Kalign is free software. You can redistribute it and/or modify\n\
         it under the terms of the GNU General Public License as\n\
         published by the Free Software Foundation.\n\n";
-
+*/
         
 
 	while (1){
