@@ -58,13 +58,13 @@ int** feature_hirschberg_alignment(struct alignment* aln,int* tree,float**submat
 	
 	hm = hirsch_mem_alloc(hm,1024);
 
-	fprintf(stderr,"\nAlignment:\n");
+	// fprintf(stderr,"\nAlignment:\n");
 
 	for (i = 0; i < (numseq-1);i++){
 		a = tree[i*3];
 		b = tree[i*3+1];
 		c = tree[i*3+2];
-		fprintf(stderr,"\r%8.0f percent done",(float)(i) /(float)numseq * 100);
+		// fprintf(stderr,"\r%8.0f percent done",(float)(i) /(float)numseq * 100);
 		//fprintf(stderr,"Aligning:%d %d->%d	done:%f\n",a,b,c,((float)(i+1)/(float)numseq)*100);
 		len_a = aln->sl[a];
 		len_b = aln->sl[b];
@@ -140,7 +140,7 @@ int** feature_hirschberg_alignment(struct alignment* aln,int* tree,float**submat
 		free(profile[a]);
 		free(profile[b]);
 	}
-	fprintf(stderr,"\r%8.0f percent done\n",100.0);
+	// fprintf(stderr,"\r%8.0f percent done\n",100.0);
 	free(profile);
 	hirsch_mem_free(hm);
 	for (i = 32;i--;){

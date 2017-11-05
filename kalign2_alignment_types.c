@@ -48,14 +48,14 @@ int** default_alignment(struct alignment* aln,int* tree,float**submatrix, int** 
 	
 	dp = dp_matrix_alloc(dp,511,511);
 	
-	fprintf(stderr,"\nAlignment:\n");
+	// fprintf(stderr,"\nAlignment:\n");
 	
 	//c = numseq;
 	for (i = 0; i < (numseq-1);i++){
 		a = tree[i*3];
 		b = tree[i*3+1];
 		c = tree[i*3+2];
-		fprintf(stderr,"\r%8.0f percent done",(float)(i) /(float)numseq * 100);
+		// fprintf(stderr,"\r%8.0f percent done",(float)(i) /(float)numseq * 100);
 		//fprintf(stderr,"Aligning:%d %d->%d	%d	%d\n",a,b,c,numseq,i);
 		len_a = aln->sl[a];
 		len_b = aln->sl[b];
@@ -117,7 +117,7 @@ int** default_alignment(struct alignment* aln,int* tree,float**submatrix, int** 
 		free(profile[a]);
 		free(profile[b]);
 	}
-	fprintf(stderr,"\r%8.0f percent done\n",100.0);
+	// fprintf(stderr,"\r%8.0f percent done\n",100.0);
 	free(profile[numprofiles-1]);
 	free(profile);
 	
@@ -772,7 +772,7 @@ struct ntree_data* ntree_sub_alignment(struct ntree_data* ntree_data,int* tree,i
 	
 	if(ntree_data->profile[c]){
 		if(ntree_data->map[c][ntree_data->map[c][0]+2]  < local_map[c][local_map[c][0]+2]){
-			fprintf(stderr,"%d\n",local_map[c][local_map[c][0]+2]);
+			// fprintf(stderr,"%d\n",local_map[c][local_map[c][0]+2]);
 			//remove old map,profile,etc..
 			for (i = 0; i < num-1;i++){
 				c = tree[i*3+3];
@@ -802,10 +802,10 @@ struct ntree_data* ntree_sub_alignment(struct ntree_data* ntree_data,int* tree,i
 			ntree_data->tree[0] += (tree[0]-1);
 
 		}else{
-			fprintf(stderr,"no improvement\n");
+			// fprintf(stderr,"no improvement\n");
 		}
 	}else{
-		fprintf(stderr,"%d\n",local_map[c][local_map[c][0]+2]);
+		// fprintf(stderr,"%d\n",local_map[c][local_map[c][0]+2]);
 		for (i = 0; i < num-1;i++){
 			c = tree[i*3+3];
 			ntree_data->map[c] = malloc(sizeof(int)*(local_map[c][0]+3));

@@ -278,7 +278,7 @@ struct ntree_data* alignntree(struct ntree_data* ntree_data,struct aln_tree_node
 	}
 	i = 0;
 	if (p->links[i]){
-		fprintf(stderr,"Aligning subtree: at node:%d\n",p->num);
+		// fprintf(stderr,"Aligning subtree: at node:%d\n",p->num);
 		while(p->links[i]){
 			leaves[i] = p->links[i]->num;
 			i++;
@@ -537,7 +537,7 @@ struct ntree_data* find_best_topology(struct ntree_data* ntree_data,int* leaves,
 				tree = simpleinsert(tree,milometer[c],newnode,leaves[2+c]);
 				newnode+=2;
 			} 
-			fprintf(stderr,"Topology:%d	",i);
+			// fprintf(stderr,"Topology:%d	",i);
 			//printsimpleTree(tree);
 			c = add_label_simpletree(tree,nodes,0);
 			

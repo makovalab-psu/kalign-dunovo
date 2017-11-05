@@ -168,13 +168,13 @@ int** hirschberg_profile_alignment(struct alignment* aln,int* tree,float**submat
 	
 	hm = hirsch_mem_alloc(hm,1024);
 
-	fprintf(stderr,"\nAlignment:\n");
+	// fprintf(stderr,"\nAlignment:\n");
 
 	for (i = 0; i < (local_numseq-1);i++){
 		a = tree[i*3];
 		b = tree[i*3+1];
 		c = tree[i*3+2];
-		fprintf(stderr,"\r%8.0f percent done",(float)(i) /(float)local_numseq * 100);
+		// fprintf(stderr,"\r%8.0f percent done",(float)(i) /(float)local_numseq * 100);
 		//fprintf(stderr,"Aligning:%d %d->%d	done:%f\n",a,b,c,((float)(i)/(float)local_numseq)*100);
 		len_a = aln->sl[a];
 		len_b = aln->sl[b];
@@ -251,7 +251,7 @@ int** hirschberg_profile_alignment(struct alignment* aln,int* tree,float**submat
 		free(profile[a]);
 		free(profile[b]);
 	}
-	fprintf(stderr,"\r%8.0f percent done\n",100.0);
+	// fprintf(stderr,"\r%8.0f percent done\n",100.0);
 	free(profile);
 	hirsch_mem_free(hm);
 	for (i = 32;i--;){
@@ -411,7 +411,7 @@ float** protein_profile_wu_distance(struct alignment* aln,float** dm,struct para
 			}
 		}
 	}
-	fprintf(stderr,"Distance Calculation:\n");
+	// fprintf(stderr,"Distance Calculation:\n");
 	b = (numseq*(numseq-1))/2;
 	a = 1;	
 	
@@ -445,7 +445,7 @@ float** protein_profile_wu_distance(struct alignment* aln,float** dm,struct para
 				dm[n][m] = dm[m][n];
 				
 			}
-			fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
+			// fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
 			a++;
 			
 		}
@@ -492,7 +492,7 @@ float** dna_profile_distance(struct alignment* aln,float** dm,struct parameters*
 		local_sl[i] = a;
 	}
 	
-	fprintf(stderr,"Distance Calculation:\n");
+	// fprintf(stderr,"Distance Calculation:\n");
 	
 	
 	for (i = 0;i < 1024;i++){
@@ -544,7 +544,7 @@ float** dna_profile_distance(struct alignment* aln,float** dm,struct parameters*
 				//dm[i][j] /= (aln->sl[i] > aln->sl[j]) ? aln->sl[j] : aln->sl[i];
 				dm[n][m] = dm[m][n];
 			}
-			fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
+			// fprintf(stderr,"\r%8.0f percent done",(float)a /(float)b * 100);
 			a++;
 		}
 		

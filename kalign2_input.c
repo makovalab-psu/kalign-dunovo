@@ -1655,7 +1655,7 @@ struct alignment* read_sequences(struct alignment* aln,char* string)
 	for (i =1+start;i < local_numseq+1+start;i++){
 		if(!aln->sl[i]){
 			fprintf(stderr,"Sequence %d has a length of 0!!\n",i-1);
-			exit(1);
+			exit(1);  //TODO: eliminate
 		}
 		aln->sl[i-1] = aln->sl[i];
 	}
@@ -1786,7 +1786,7 @@ struct alignment* read_alignment(struct alignment* aln,char* string)
 	for (i =1+start;i < local_numseq+1+start;i++){
 		if(!aln->sl[i]){
 			fprintf(stderr,"Sequence %d has a length of 0!!\n",i-1);
-			exit(1);
+			exit(1); //TODO: Eliminate.
 		}
 		aln->sl[i-1] = aln->sl[i];
 	}
