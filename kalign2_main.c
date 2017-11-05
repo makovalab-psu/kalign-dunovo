@@ -32,7 +32,7 @@ float gpo = 0;
 float gpe = 0;
 float tgpe = 0;
 
-AlnStrs *main(int argc,char **argv) {
+AlnStrs *align(int argc,char **argv) {
 	int i;
 	int* tree = 0;
 	int a, b, c;

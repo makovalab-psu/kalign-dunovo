@@ -27,7 +27,7 @@ class AlnStrs(ctypes.Structure):
     ('seqs', ctypes.POINTER(ctypes.c_char_p)),
   ]
 
-kalign.main.restype = ctypes.POINTER(AlnStrs)
+kalign.align.restype = ctypes.POINTER(AlnStrs)
 
 
 def make_argparser():
@@ -64,7 +64,7 @@ def align(seqs):
     input_file.close()
     argc, argv = make_args(input_file.name)
     logging.info('Calling {} with $ {}'.format(LIBFILE, ' '.join([arg for arg in argv])))
-    aln = kalign.main(argc, argv)
+    aln = kalign.align(argc, argv)
     # A possible error the kalign C code can cause is messing up stderr.
     # If you try to write to stderr after this happens, it will raise an IOError (errno 0).
     # If that doesn't happen, the script will continue as normal, but logging to stderr will
