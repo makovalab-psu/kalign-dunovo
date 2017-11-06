@@ -667,9 +667,8 @@ void fasta_output(struct alignment* aln,char* outfile)
 AlnStrs *aln_to_strs(struct alignment *aln) {
 	AlnStrs *aln_strs = malloc(sizeof(AlnStrs *));
 	aln_strs->nseqs = numseq;
-	int char_p_size = sizeof(char *);
-	char **names = malloc(char_p_size * numseq);
-	char **seqs = malloc(char_p_size * numseq);
+	char **names = malloc(sizeof(char *) * numseq);
+	char **seqs = malloc(sizeof(char *) * numseq);
 
 	int i, j, g, f, pos, num_gaps, gaplen, name_len;
 	int seqlen = -1;
@@ -679,7 +678,7 @@ AlnStrs *aln_to_strs(struct alignment *aln) {
 		pos = 0;
 		// Get the sequence name.
 		name_len = strlen(aln->sn[f]) + 1;
-		names[i] = malloc(char_p_size * name_len);
+		names[i] = malloc(sizeof(char) * name_len);
 		strcpy(names[i], aln->sn[f]);
 		// Get the final (gapped) sequence length, if we haven't already
 		// (it'll be the same for all sequences (it's an alignment)).
@@ -692,7 +691,7 @@ AlnStrs *aln_to_strs(struct alignment *aln) {
 			seqlen = num_gaps + aln->sl[f] + 1;
 			aln_strs->seqlen = seqlen;
 		}
-		seqs[i] = malloc(char_p_size * seqlen);
+		seqs[i] = malloc(sizeof(char) * seqlen);
 		// aln->sl holds sequence lengths.
 		for (j = 0; j < aln->sl[f]; j++) {
 			// gaplen is the length of any gap at this position.
