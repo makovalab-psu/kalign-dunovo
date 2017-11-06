@@ -37,7 +37,9 @@
 #define tmalloc malloc
 #endif
 
+// A global storing the number of input sequences.
 extern unsigned int numseq;
+// numprofiles = 2*numseq - 1
 extern unsigned int numprofiles;
 extern float gpo;
 extern float gpe;
@@ -115,25 +117,32 @@ void big_remove_nodes(struct bignode *n);
 void big_print_nodes(struct bignode *n);
 
 
-
 struct alignment{
+	// General note: kalign2_mem.c:aln_alloc() gives a lot of hints about this struct.
 	//struct node** seq;
+	// ft is an array numseq long. In normal use, on FASTA input, it remains NULL.
 	struct feature** ft;
+	// si is an array numseq long. In normal use, on FASTA input, it remains NULL.
 	struct sequence_info** si;
+	// sip is an array numprofiles long. Each element is an array of ints.
 	unsigned int** sip;
-	// sip seems to convert between a 0 to numseq index of sequences to some kind of internal index,
-	// used in sn, seq, sl, and s. In practice, the two indexes seem to be (at least sometimes) equal.
-	// See how it's used in kalign2_output.c:aln_to_strs().
+	/* nsip is an array numprofiles long.
+	 * It seems to convert between a 0 to numseq index of sequences to some kind of internal index,
+	 * apparently for the arrays numprofiles long. Their code uses it as the index to sn, seq, sl,
+	 * and s, even though some of those are numseq long. In practice, the two indexes seem to
+	 * be (at least sometimes) equal. See how it's used in kalign2_output.c:aln_to_strs().
+	 */
 	unsigned int* nsip;
-	// sl stores an array of the (original, unaligned) sequence lengths.
+	// sl is an array numprofiles long. It stores the (original, unaligned) sequence lengths.
 	unsigned int* sl;
+	// lsn is an array numseq long. I think it's the lengths of the sequence names.
 	unsigned int* lsn;
-	// s stores the gaps. Each element corresponds to a position in the sequence, and the value is
-	// the length of the gap before that base (0 for no gap).
+	// s is an array numseq long. It stores the gaps. Each element corresponds to a position in the
+	// sequence, and the value is the length of the gap before that base (0 for no gap).
 	int** s;
-	// seq stores the (original, unaligned) sequence.
+	// seq is an array numseq long. It stores the (original, unaligned) sequence.
 	char**seq;
-	// sn stores an array of sequence names.
+	// sn is an array numseq long. It stores the sequence names.
 	char** sn;
 };
 

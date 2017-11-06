@@ -70,13 +70,18 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 	
 	
 	for (i = c; i < num_input;i++){
-		// if(!param->infile[i]){
-		// 	fprintf(stderr,"reading from STDIN: ");
-		// }else{
-		// 	fprintf(stderr,"reading from %s: ",param->infile[i]);
-		// }
+		// executed fprintf(stderr, "file %s, line %d\n", __FILE__, __LINE__);
+		/*
+		 * if(!param->infile[i]){
+		 * 	fprintf(stderr,"reading from STDIN: ");
+		 * }else{
+		 * 	fprintf(stderr,"reading from %s: ",param->infile[i]);
+		 * }
+		 */
+		// input seems to hold the entire input from one data source (file, stdin, etc) as a string.
 		input[i] = get_input_into_string(input[i],param->infile[i]);
 		if(input[i]){
+			// executed 1 time
 			free_read++;
 			if (byg_start("<macsim>",input[i]) != -1){
 				input_numseq[i] = count_sequences_macsim(input[i]);
@@ -104,6 +109,7 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 				input_numseq[i] = count_sequences_stockholm(input[i]);
 				input_type[i] = 5;
 			}else{
+				// executed
 				input_numseq[i]  = count_sequences_fasta(input[i]);
 				input_type[i] = 0;
 			}
@@ -113,9 +119,11 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 				free(input[i]);
 				input[i] = 0;
 			}else{
+				// executed
 				numseq += input_numseq[i];
 			}
 		}else{
+			// not executed
 			fprintf(stderr,"found no sequences.\n");
 			if(!param->outfile && i){
 				param->outfile = param->infile[i];
@@ -188,6 +196,7 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 	aln = aln_alloc(aln);
 	//numseq = 0;
 	if(byg_start(param->alignment_type,"profPROFprofilePROFILE") != -1){
+		// not executed
 		j = 0;
 		for (i = 0; i < num_input;i++){
 			
@@ -204,7 +213,6 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 						aln = read_alignment_uniprot_xml(aln,input[i]);
 						break;
 					case 3:
-
 						aln = read_alignment_from_swissprot(aln, input[i]);
 						break;
 					case 4:
@@ -213,7 +221,6 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 					case 5:
 						aln = read_alignment_stockholm(aln,input[i]);
 						break;
-					
 					default:
 						aln = read_alignment(aln,input[i]);
 						break;
@@ -282,10 +289,14 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 		}
 		exit(0);*/
 	}else{
+		// executed
 		for (i = 0; i < num_input;i++){
+			// executed 2 times
 			if(input[i]){
+				// executed 1 time
 				switch(input_type[i]){
 					case 0:
+						// executed 1 time
 						aln = read_sequences(aln,input[i]);
 						break;
 					case 1:
@@ -303,7 +314,6 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 					case 5:
 						aln = read_sequences_stockholm(aln,input[i]);
 						break;
-					
 					default:
 						aln = read_sequences(aln,input[i]);
 						break;
@@ -337,13 +347,18 @@ struct alignment* detect_and_read_sequences(struct alignment* aln,struct paramet
 		exit(0);
 	}
 	if(!param->format && param->outfile){
+			// executed
 			if (byg_start("msf",param->outfile) != -1){
+				// not executed
 				param->format = "msf";
 			}else if (byg_start("clustal",param->outfile) != -1){
+				// not executed
 				param->format = "clustal";
 			}else if (byg_start("aln",param->outfile) != -1){
+				// not executed
 				param->format = "clustal";
 			}else if (byg_start("macsim",param->outfile) != -1){
+				// not executed
 				param->format = "macsim";
 			}
 			// fprintf(stderr,"Output file: %s, in %s format.\n",param->outfile,param->format);
@@ -1601,6 +1616,8 @@ struct alignment* read_sequences(struct alignment* aln,char* string)
 			stop = 0;
 		}
 	}
+	// stop is 0 here
+
 	/*
 	if(!numseq){
 		fprintf(stderr,"No sequences found!\n");
@@ -1623,6 +1640,7 @@ struct alignment* read_sequences(struct alignment* aln,char* string)
 	}*/
 	start = 0;
 	while(aln->sl[start]){
+		// not executed
 		start++;
 	}
 	j = start;
@@ -1711,6 +1729,7 @@ struct alignment* read_sequences(struct alignment* aln,char* string)
 
 struct alignment* read_alignment(struct alignment* aln,char* string)
 {
+	// not executed
 	int c = 0;
 	int n = 0;
 	int i = 0;
