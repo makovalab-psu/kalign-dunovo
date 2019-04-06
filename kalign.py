@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import os
 import sys
 import errno
@@ -6,6 +10,7 @@ import ctypes
 import logging
 import argparse
 import tempfile
+PY3 = sys.version_info.major >= 3
 
 # Locate the library file.
 LIBFILE = 'libkalign.so'
@@ -19,7 +24,7 @@ if not os.path.isfile(library_path):
 kalign = ctypes.cdll.LoadLibrary(library_path)
 
 
-class AlnStrs(ctypes.Structure):
+class AlignmentStruct(ctypes.Structure):
   _fields_ = [
     ('nseqs', ctypes.c_int),
     ('seqlen', ctypes.c_int),
@@ -27,7 +32,7 @@ class AlnStrs(ctypes.Structure):
     ('seqs', ctypes.POINTER(ctypes.c_char_p)),
   ]
 
-kalign.align.restype = ctypes.POINTER(AlnStrs)
+kalign.align.restype = ctypes.POINTER(AlignmentStruct)
 
 
 def make_argparser():
@@ -48,30 +53,30 @@ def main(argv):
     else:
       seqs.append(line)
   alignment = align(seqs)
-  for i in range(alignment.nseqs):
-    print alignment.seqs[i]
+  for seq in alignment:
+    print(seq)
 
 
 def align(seqs):
   """Perform a multiple sequence alignment on a set of sequences and parse the result."""
-  i = 0
   input_file = tempfile.NamedTemporaryFile('w', delete=False, prefix='align.msa.')
   try:
+    i = 0
     for seq in seqs:
       i += 1
       input_file.write('>seq{}\n'.format(i))
       input_file.write(seq+'\n')
     input_file.close()
     argc, argv = make_args(input_file.name)
-    logging.info('Calling {} with $ {}'.format(LIBFILE, ' '.join([arg for arg in argv])))
-    aln = kalign.align(argc, argv)
+    logging.info('Calling {} with $ {}'.format(LIBFILE, b' '.join(argv)))
+    alignment_struct = kalign.align(argc, argv)
     # A possible error the kalign C code can cause is messing up stderr.
     # If you try to write to stderr after this happens, it will raise an IOError (errno 0).
     # If that doesn't happen, the script will continue as normal, but logging to stderr will
     # silently fail.
     if sys.stderr.fileno() == -1:
       logging.error('Error: '+LIBFILE+' borked stderr.')
-    return aln.contents
+    return pythonify_alignment(alignment_struct.contents)
   finally:
     # Make sure we delete the temporary file.
     try:
@@ -94,8 +99,20 @@ def make_args(infile):
 def strlist_to_c(strlist):
   c_strs = (ctypes.c_char_p * len(strlist))()
   for i, s in enumerate(strlist):
+    if PY3:
+      s = bytes(s, 'utf8')
     c_strs[i] = ctypes.c_char_p(s)
   return c_strs
+
+
+def pythonify_alignment(alignment_struct):
+  seqs = []
+  for i in range(alignment_struct.nseqs):
+    seq = alignment_struct.seqs[i]
+    if PY3:
+      seq = str(seq, 'utf8')
+    seqs.append(seq)
+  return seqs
 
 
 if __name__ == '__main__':
