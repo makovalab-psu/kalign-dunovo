@@ -98,20 +98,24 @@ def make_args(infile):
 
 def strlist_to_c(strlist):
   c_strs = (ctypes.c_char_p * len(strlist))()
-  for i, s in enumerate(strlist):
+  for i, str_raw in enumerate(strlist):
     if PY3:
-      s = bytes(s, 'utf8')
-    c_strs[i] = ctypes.c_char_p(s)
+      str_bytes = bytes(str_raw, 'utf8')
+    else:
+      str_bytes = str_raw
+    c_strs[i] = ctypes.c_char_p(str_bytes)
   return c_strs
 
 
 def pythonify_alignment(alignment_struct):
   seqs = []
   for i in range(alignment_struct.nseqs):
-    seq = alignment_struct.seqs[i]
+    seq_raw = alignment_struct.seqs[i]
     if PY3:
-      seq = str(seq, 'utf8')
-    seqs.append(seq)
+      seq_str = str(seq_raw, 'utf8')
+    else:
+      seq_str = seq_raw
+    seqs.append(seq_str)
   return seqs
 
 
