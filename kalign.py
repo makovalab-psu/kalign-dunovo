@@ -102,7 +102,7 @@ def strlist_to_c(strlist):
     if PY3:
       str_bytes = bytes(str_raw, 'utf8')
     else:
-      str_bytes = str_raw
+      str_bytes = bytes(str_raw)
     c_strs[i] = ctypes.c_char_p(str_bytes)
   return c_strs
 
@@ -114,7 +114,7 @@ def pythonify_alignment(alignment_struct):
     if PY3:
       seq_str = str(seq_raw, 'utf8')
     else:
-      seq_str = seq_raw
+      seq_str = str(seq_raw)
     seqs.append(seq_str)
   return seqs
 
